@@ -1,0 +1,10 @@
+/home/toadslop/code/toadslop/rust/webapp/ezytutors/tutor-nodb/target/rls/debug/deps/futures_channel-f927a33884b7c975.rmeta: /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lib.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lock.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/mod.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/queue.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/sink_impl.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/oneshot.rs
+
+/home/toadslop/code/toadslop/rust/webapp/ezytutors/tutor-nodb/target/rls/debug/deps/futures_channel-f927a33884b7c975.d: /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lib.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lock.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/mod.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/queue.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/sink_impl.rs /home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/oneshot.rs
+
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lib.rs:
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/lock.rs:
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/mod.rs:
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/queue.rs:
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/mpsc/sink_impl.rs:
+/home/toadslop/.cargo/registry/src/github.com-1ecc6299db9ec823/futures-channel-0.3.19/src/oneshot.rs:

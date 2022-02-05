@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/toadslop/code/toadslop/rust/webapp/ezytutors/tutor-nodb/target/rls/debug/build/typenum-e8acf6f6539df927/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/home/toadslop/code/toadslop/rust/webapp/ezytutors/tutor-nodb/target/rls/debug/build/typenum-e8acf6f6539df927/out/op.rs
