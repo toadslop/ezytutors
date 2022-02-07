@@ -10,7 +10,7 @@ create table ezy_course_c4
 
 insert into ezy_course_c4
     (course_id, tutor_id, course_name, posted_time)
-values(1, 1, 'First course', '2020-12-17 05:40:00');
+values(DEFAULT, 1, 'First course', '2020-12-17 05:40:00');
 insert into ezy_course_c4
     (course_id, tutor_id, course_name, posted_time)
-values(2, 1, 'Second course', '2020-12-17 05:45:00');
+values(DEFAULT, 1, 'Second course', '2020-12-17 05:45:00');
