@@ -9,3 +9,7 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
     *visit_count += 1;
     HttpResponse::Ok().json(&response)
 }
+
+pub async fn not_found() -> HttpResponse {
+    HttpResponse::Ok().json("NOT FOUND")
+}

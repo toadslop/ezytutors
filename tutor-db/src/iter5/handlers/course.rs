@@ -54,11 +54,11 @@ pub async fn update_course_details(
 mod tests {
     use super::*;
     use actix_web::http::StatusCode;
-    use chrono::NaiveDate;
     use dotenv::dotenv;
     use sqlx::postgres::PgPool;
     use std::env;
     use std::sync::Mutex;
+    use actix_web::ResponseError;
 
     #[actix_rt::test]
     async fn get_all_courses_success() {
@@ -137,5 +137,70 @@ mod tests {
         let course_param = web::Json(new_course_msg);
         let resp = post_new_course(course_param, app_state).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
+    }
+
+    #[actix_rt::test]
+    async fn update_course_success() {
+        dotenv().ok();
+        let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
+        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let app_state: web::Data<AppState> = web::Data::new(AppState {
+            health_check_response: "".to_string(),
+            visit_count: Mutex::new(0),
+            db: pool,
+        });
+
+        let update_course_msg = UpdateCourse {
+            course_name: Some("This is the next course".into()),
+            course_description: Some("This is a test course".into()),
+            course_format: None,
+            course_level: Some("Beginner".into()),
+            course_price: None,
+            course_duration: None,
+            course_language: Some("German".into()),
+            course_structure: None,
+        };
+
+        let parameters: web::Path<(i32, i32)> = web::Path::from((1,2));
+        let update_param = web::Json(update_course_msg);
+        let resp = update_course_details(app_state, update_param, parameters)
+            .await
+            .unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+
+    #[actix_rt::test]
+    async fn delete_test_success() {
+        dotenv().ok();
+        let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
+        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let app_state: web::Data<AppState> = web::Data::new(AppState {
+            health_check_response: "".to_string(),
+            visit_count: Mutex::new(0),
+            db: pool,
+        });
+
+        let parameters: web::Path<(i32, i32)> = web::Path::from((1,5));
+        let resp = delete_course(app_state, parameters).await.unwrap();
+        assert_eq!(resp.status(), StatusCode::OK);
+    }
+
+    #[actix_rt::test]
+    async fn delete_test_failure() {
+        dotenv().ok();
+        let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
+        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let app_state: web::Data<AppState> = web::Data::new(AppState {
+            health_check_response: "".to_string(),
+            visit_count: Mutex::new(0),
+            db: pool,
+        });
+
+        let parameters: web::Path<(i32, i32)> = web::Path::from((1,21));
+        let resp = delete_course(app_state, parameters).await;
+        match resp {
+            Ok(_) => println!("Something's wrong"),
+            Err(err) => assert_eq!(err.status_code(), StatusCode::NOT_FOUND), 
+        }
     }
 }

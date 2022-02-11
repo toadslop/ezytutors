@@ -7,7 +7,7 @@ pub struct Course {
     pub course_id: i32,
     pub tutor_id: i32,
     pub course_name: String,
-    pub course_description: String,
+    pub course_description: Option<String>,
     pub course_format: Option<String>,
     pub course_structure: Option<String>,
     pub course_duration: Option<String>,
@@ -30,8 +30,8 @@ pub struct CreateCourse {
     pub course_level: Option<String>,
 }
 
-impl From<web::Json<Course>> for CreateCourse {
-    fn from(new_course: web::Json<Course>) -> Self {
+impl From<web::Json<CreateCourse>> for CreateCourse {
+    fn from(new_course: web::Json<CreateCourse>) -> Self {
         CreateCourse {
             tutor_id: new_course.tutor_id,
             course_name: new_course.course_name.clone(),
@@ -58,8 +58,8 @@ pub struct UpdateCourse {
     pub course_level: Option<String>,
 }
 
-impl From<web::Json<Course>> for UpdateCourse {
-    fn from(update_course: web::Json<Course>) -> Self {
+impl From<web::Json<UpdateCourse>> for UpdateCourse {
+    fn from(update_course: web::Json<UpdateCourse>) -> Self {
         UpdateCourse {
             course_name: update_course.course_name.clone(),
             course_description: update_course.course_description.clone(),

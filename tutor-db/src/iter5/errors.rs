@@ -6,7 +6,7 @@ use std::fmt;
 #[derive(Debug, Serialize)]
 pub enum EzyTutorError {
     DbError(String),
-    //ActixError(String),
+    ActixError(String),
     NotFound(String),
 }
 
@@ -22,10 +22,10 @@ impl EzyTutorError {
                 println!("Database error occurred: {:?}", msg);
                 "Database error".into()
             }
-            // EzyTutorError::ActixError(msg) => {
-            //     println!("Server error occured: {:?}", msg);
-            //     "Internal server error".into()
-            // }
+            EzyTutorError::ActixError(msg) => {
+                println!("Server error occured: {:?}", msg);
+                "Internal server error".into()
+            }
             EzyTutorError::NotFound(msg) => {
                 println!("Not found error occured: {:?}", msg);
                 msg.into()
@@ -49,7 +49,7 @@ impl From<SqlxError> for EzyTutorError {
 impl error::ResponseError for EzyTutorError {
     fn status_code(&self) -> StatusCode {
         match self {
-            EzyTutorError::DbError(_) /*| EzyTutorError::ActixError(_)*/ => {
+            EzyTutorError::DbError(_) | EzyTutorError::ActixError(_) => {
                 StatusCode::INTERNAL_SERVER_ERROR
             }
             EzyTutorError::NotFound(_) => StatusCode::NOT_FOUND,

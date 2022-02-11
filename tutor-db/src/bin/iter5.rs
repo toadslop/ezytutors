@@ -1,5 +1,6 @@
 use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
+use handlers::general::not_found;
 use sqlx::postgres::PgPool;
 use std::env;
 use std::io;
@@ -44,8 +45,12 @@ async fn main() -> io::Result<()> {
             .app_data(shared_data.clone())
             .configure(general_routes)
             .configure(course_routes)
+            .default_service(
+                web::route().to(not_found)
+            )
     };
 
     let host_port = env::var("HOST_PORT").expect("HOST_PORT address is not set in .env file");
-    HttpServer::new(app).bind(&host_port)?.run().await
+    HttpServer::new(app)
+    .bind(&host_port)?.run().await
 }

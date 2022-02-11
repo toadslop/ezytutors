@@ -10,5 +10,6 @@
       "username": "toadslop",
       "password": "SlrGkdlwl26"
     }
-  ]
+  ],
+  "rust-analyzer.diagnostics.disabled": ["unresolved-macro-call"]
 }
