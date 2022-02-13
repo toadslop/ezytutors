@@ -25,6 +25,7 @@ mod routes;
 mod state;
 
 use routes::*;
+use errors::EzyTutorError;
 use state::AppState;
 
 #[actix_rt::main]
@@ -43,8 +44,12 @@ async fn main() -> io::Result<()> {
     let app = move || {
         App::new()
             .app_data(shared_data.clone())
+            .app_data(web::JsonConfig::default().error_handler(|_err, _req| {
+                EzyTutorError::InvalidInput("Please provide valid JSON input".to_string()).into()
+            }))
             .configure(general_routes)
             .configure(course_routes)
+            .configure(tutor_routes)
             .default_service(
                 web::route().to(not_found)
             )
