@@ -46,6 +46,36 @@ pub struct Tutor {
     name: String,
 }
 
+async fn handle_get_tutors(
+    tmpl: web::Data<tera::Tera>
+) -> Result<HttpResponse, Error> {
+    let tutors: Vec<Tutor> = vec![
+        Tutor {
+            name: String::from("Tutor 1"),
+        },
+        Tutor {
+            name: String::from("Tutor 2"),
+        },
+        Tutor {
+            name: String::from("Tutor 3"),
+        },
+        Tutor {
+            name: String::from("Tutor 4"),
+        },
+        Tutor {
+            name: String::from("Tutor 5"),
+        },
+    ];
+
+    let mut ctx = tera::Context::new();
+    ctx.insert("tutors", &tutors);
+    let rendered_html = tmpl
+        .render("list.html", &ctx)
+        .map_err(|_| error::ErrorInternalServerError("Template error"))?;
+
+    Ok(HttpResponse::Ok().content_type("text/html").body(rendered_html))
+}
+
 async fn handle_post_tutor(
     tmpl: web::Data<tera::Tera>,
     params: web::Form<Tutor>,
@@ -66,6 +96,8 @@ fn app_config(config: &mut web::ServiceConfig) {
             .service(fs::Files::new("/static", "./static").show_files_listing())
             .service(web::resource("/").route(web::get().to(index)))
             .service(web::resource("/form").route(web::get().to(form)))
-            .service(web::resource("/tutors").route(web::post().to(handle_post_tutor)))
+            .service(web::resource("/tutors")
+                .route(web::post().to(handle_post_tutor))
+                .route(web::get().to(handle_get_tutors)))
     );
 }
