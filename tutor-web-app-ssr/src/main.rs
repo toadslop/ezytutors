@@ -1,20 +1,24 @@
 #[path = "./mod.rs"]
 mod modules;
 
-use modules::{dbaccess, errors, handlers, models, routes::app_config, state::AppState};
 use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
+use modules::{dbaccess, errors, handlers, models, routes, state};
+use routes::app_config;
 use sqlx::postgres::PgPoolOptions;
+use state::AppState;
 use std::env;
 use tera::Tera;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenv().ok();
-    let host_port = env::var("HOST_PORT").expect("HOST_PORT address is not set in .env file");
+    let host_port = env::var("HOST_PORT")
+        .expect("HOST_PORT address is not set in .env file");
     println!("Listening on {}!", &host_port);
 
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
+    let database_url = env::var("DATABASE_URL")
+        .expect("DATABASE_URL is not set in .env file");
     let db_pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&database_url)
