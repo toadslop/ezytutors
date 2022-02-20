@@ -9,7 +9,7 @@ pub async fn get_courses_for_tutor_db(
 
     let course_rows: Vec<Course> = sqlx::query_as!(
         Course,
-        "SELECT * FROM ezy_course_c6 where tutor_id = $1",
+        "SELECT * FROM courses where tutor_id = $1",
         tutor_id
     )
     .fetch_all(pool)
@@ -25,7 +25,7 @@ pub async fn get_course_details_db(
 ) -> Result<Course, EzyTutorError> {
     let course_row = sqlx::query_as!(
         Course,
-        "SELECT * FROM ezy_course_c6 WHERE tutor_id = $1 AND course_id = $2",
+        "SELECT * FROM courses WHERE tutor_id = $1 AND course_id = $2",
         tutor_id,
         course_id,
     )
@@ -45,7 +45,7 @@ pub async fn post_new_course_db(
 ) -> Result<Course, EzyTutorError> {
     let course_row = sqlx::query_as!(
         Course,
-        "INSERT INTO ezy_course_c6( \
+        "INSERT INTO courses( \
             tutor_id, \
             course_name, \
             course_description, \
@@ -89,7 +89,7 @@ pub async fn delete_course_db(
     course_id: i32,
 ) -> Result<String, EzyTutorError> {
     let course_row = sqlx::query!(
-        "DELETE FROM ezy_course_c6 WHERE tutor_id = $1 AND course_id = $2",
+        "DELETE FROM courses WHERE tutor_id = $1 AND course_id = $2",
         tutor_id,
         course_id,
     )
@@ -108,7 +108,7 @@ pub async fn update_course_details_db(
 
     let current_course_row = sqlx::query_as!(
         Course,
-        "SELECT * FROM ezy_course_c6 where tutor_id = $1 and course_id = $2",
+        "SELECT * FROM courses where tutor_id = $1 and course_id = $2",
         tutor_id,
         course_id
     )
@@ -161,7 +161,7 @@ pub async fn update_course_details_db(
     let course_row =
         sqlx::query_as!(
         Course,
-        "UPDATE ezy_course_c6 set course_name = $1, course_description = $2, course_format = $3,
+        "UPDATE courses set course_name = $1, course_description = $2, course_format = $3,
         course_structure = $4, course_duration = $5, course_price = $6, course_language = $7,
         course_level = $8 where tutor_id = $9 and course_id = $10 returning tutor_id, course_id,
         course_name, course_description, course_duration, course_level, course_format,

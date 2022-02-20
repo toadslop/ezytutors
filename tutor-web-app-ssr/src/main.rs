@@ -4,11 +4,12 @@ mod modules;
 use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
 use modules::{dbaccess, errors, handlers, models, routes, state};
-use routes::app_config;
+use routes::{app_config, course_config};
 use sqlx::postgres::PgPoolOptions;
 use state::AppState;
 use std::env;
 use tera::Tera;
+use crate::handlers::general::not_found;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -34,7 +35,11 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .data(tera)
             .app_data(shared_data.clone())
+            .configure(course_config)
             .configure(app_config)
+            .default_service(
+                web::route().to(not_found)
+            )
     })
     .bind(&host_port)?
     .run()

@@ -7,7 +7,7 @@ pub async fn get_all_tutors_db(
 ) -> Result<Vec<Tutor>, EzyTutorError> {
     Ok(sqlx::query_as!(
         Tutor,
-        "SELECT * FROM ezy_tutor_c6",
+        "SELECT * FROM tutors",
     )
     .fetch_all(pool)
     .await
@@ -20,7 +20,7 @@ pub async fn get_tutor_details_db(
 ) -> Result<Tutor, EzyTutorError> {
     Ok(sqlx::query_as!(
         Tutor,
-        "SELECT * FROM ezy_tutor_c6 WHERE tutor_id = $1",
+        "SELECT * FROM tutors WHERE tutor_id = $1",
         tutor_id,
     )
     .fetch_one(pool)
@@ -34,7 +34,7 @@ pub async fn post_new_tutor_db(
 ) -> Result<Tutor, EzyTutorError> {
     Ok(sqlx::query_as!(
         Tutor,
-        "INSERT INTO ezy_tutor_c6(tutor_id, tutor_name, tutor_pic_url, tutor_profile) \
+        "INSERT INTO tutors(tutor_id, tutor_name, tutor_pic_url, tutor_profile) \
         VALUES (DEFAULT, $1, $2, $3) RETURNING \
         tutor_id, tutor_name, tutor_pic_url, tutor_profile",
         new_tutor.tutor_name, new_tutor.tutor_pic_url, new_tutor.tutor_profile,
@@ -51,7 +51,7 @@ pub async fn update_tutor_details_db(
 ) -> Result<Tutor, EzyTutorError> {
     let current_tutor_info = sqlx::query_as!(
         Tutor,
-        "SELECT * FROM ezy_tutor_c6 WHERE tutor_id = $1",
+        "SELECT * FROM tutors WHERE tutor_id = $1",
         tutor_id,
     )
     .fetch_one(pool)
@@ -67,7 +67,7 @@ pub async fn update_tutor_details_db(
 
     Ok(sqlx::query_as!(
         Tutor,
-        "UPDATE ezy_tutor_c6 set tutor_name = $1, tutor_pic_url = $2, tutor_profile = $3 \
+        "UPDATE tutors set tutor_name = $1, tutor_pic_url = $2, tutor_profile = $3 \
         WHERE tutor_id = $4 \
         RETURNING tutor_id, tutor_name, tutor_pic_url, tutor_profile",
         new_info.tutor_name, new_info.tutor_pic_url, new_info.tutor_profile, new_info.tutor_id,
@@ -82,7 +82,7 @@ pub async fn delete_tutor_db(
     tutor_id: i32
 ) -> Result<String, EzyTutorError> {
     Ok(sqlx::query!(
-        "DELETE FROM ezy_tutor_c6 WHERE tutor_id = $1",
+        "DELETE FROM tutors WHERE tutor_id = $1",
         tutor_id,
     )
     .execute(pool)

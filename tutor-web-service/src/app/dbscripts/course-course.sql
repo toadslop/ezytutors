@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS ezy_course_c6 CASCADE;
-DROP TABLE IF EXISTS ezy_tutor_c6;
+DROP TABLE IF EXISTS courses CASCADE;
+DROP TABLE IF EXISTS tutors;
 
-CREATE TABLE ezy_tutor_c6
+CREATE TABLE tutors
 (
     tutor_id SERIAL PRIMARY KEY,
     tutor_name VARCHAR(200) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE ezy_tutor_c6
     tutor_profile VARCHAR(2000) NOT NULL
 );
 
-CREATE TABLE ezy_course_c6
+CREATE TABLE courses
 (
     course_id SERIAL PRIMARY KEY,
     tutor_id INT NOT NULL,
@@ -24,19 +24,19 @@ CREATE TABLE ezy_course_c6
     posted_time TIMESTAMP default now(),
     CONSTRAINT fk_tutor
     FOREIGN KEY(tutor_id)
-        REFERENCES ezy_tutor_c6(tutor_id)
+        REFERENCES tutors(tutor_id)
 );
 
-INSERT INTO  ezy_tutor_c6(tutor_id, tutor_name, tutor_pic_url, tutor_profile)
+INSERT INTO  tutors(tutor_id, tutor_name, tutor_pic_url, tutor_profile)
 VALUES(DEFAULT,'Merlene','http://s3.amazon.aws.com/pic1','Merlene is an experienced finance professional');
 
-INSERT INTO ezy_tutor_c6(tutor_id, tutor_name, tutor_pic_url, tutor_profile)
+INSERT INTO tutors(tutor_id, tutor_name, tutor_pic_url, tutor_profile)
 VALUES(DEFAULT,'Frank','http://s3.amazon.aws.com/pic2','Frank is an expert nuclear engineer');
 
-INSERT INTO ezy_course_c6
+INSERT INTO courses
     (course_id, tutor_id, course_name, posted_time)
 VALUES(DEFAULT, 1, 'First course', '2020-12-17 05:40:00');
 
-INSERT INTO ezy_course_c6
+INSERT INTO courses
     (course_id, tutor_id, course_name, posted_time)
 VALUES(DEFAULT, 1, 'Second course', '2020-12-17 05:45:00');
